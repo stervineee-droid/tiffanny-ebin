@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Engagement Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+  /* ── TOKENS ── */
+  :root {
+    --navy:      #0D1B2A;
+    --navy-mid:  #162336;
+    --gold:      #C9A84C;
+    --gold-lt:   #E2C97E;
+    --blush:     #E8C4C4;
+    --ivory:     #FAF6F0;
+    --white:     #FFFFFF;
+    --text-dim:  #8A9BB0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--ivory);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  
+  .gold-rule {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto;
+  }
+  .gold-rule.wide { width: 140px; }
+
+  
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 60px 24px 40px;
+    position: relative;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, #1e3354 0%, var(--navy) 70%);
+    overflow: hidden;
+  }
+
+ 
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle 1px at 20% 30%, rgba(201,168,76,.35) 0%, transparent 100%),
+      radial-gradient(circle 1px at 80% 20%, rgba(232,196,196,.25) 0%, transparent 100%),
+      radial-gradient(circle 1px at 60% 70%, rgba(201,168,76,.2) 0%, transparent 100%),
+      radial-gradient(circle 1px at 10% 80%, rgba(232,196,196,.15) 0%, transparent 100%);
+    animation: shimmer 6s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  @keyframes shimmer {
+    from { opacity: .6; transform: scale(1); }
+    to   { opacity: 1;  transform: scale(1.04); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Lato', sans-serif;
+    font-size: .72rem; letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .hero-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 10vw, 7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--ivory);
+  }
+
+  .hero-names span { color: var(--gold); font-style: italic; }
+
+  .ampersand {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--blush);
+    line-height: 1;
+    margin: 4px 0;
+  }
+
+  .hero-tagline {
+    margin-top: 22px;
+    font-size: .95rem;
+    color: var(--text-dim);
+    letter-spacing: .08em;
+  }
+
+ 
+  #countdown {
+    margin-top: 48px;
+    display: flex; gap: 24px; flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cd-unit {
+    display: flex; flex-direction: column;
+    align-items: center;
+    min-width: 72px;
+  }
+
+  .cd-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: .02em;
+  }
+
+  .cd-label {
+    font-size: .65rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .cd-sep {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    opacity: .4;
+    align-self: flex-start;
+    margin-top: 6px;
+  }
+
+
+  section { padding: 90px 24px; }
+
+  .section-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    text-align: center;
+    font-size: .7rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 16px;
+  }
+
+
+  #gallery { background: var(--navy-mid); overflow: hidden; padding: 70px 0; }
+
+  .gallery-track-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    --mask: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: var(--mask);
+    mask-image: var(--mask);
+  }
+
+  .gallery-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: slide-left 20s linear infinite;
+  }
+
+  @keyframes slide-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .gallery-track:hover { animation-play-state: paused; }
+
+  .gallery-card {
+    flex-shrink: 0;
+    width: 240px; height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(201,168,76,.18);
+  }
+
+  .gallery-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+  }
+
+  .gallery-card:hover img { transform: scale(1.06); }
+
+  
+  .gallery-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+ 
+  .gallery-card.placeholder {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, #1e3354 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .placeholder-icon {
+    font-size: 3.5rem;
+    opacity: .3;
+  }
+
+  .couple-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 20px 14px 14px;
+    background: linear-gradient(to top, rgba(13,27,42,.92) 0%, transparent 100%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .95rem;
+    font-style: italic;
+    color: var(--gold-lt);
+  }
+
+  
+  #details { background: var(--navy); }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .detail-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,.15);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s, transform .3s;
+  }
+
+  .detail-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .detail-card:hover { border-color: rgba(201,168,76,.4); transform: translateY(-3px); }
+
+  .detail-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .detail-label {
+    font-size: .68rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .detail-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--ivory);
+    line-height: 1.4;
+  }
+
+  .detail-sub {
+    font-size: .82rem;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+ 
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+    color: var(--navy);
+    font-family: 'Lato', sans-serif;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: opacity .2s, transform .2s;
+  }
+
+  .map-btn:hover { opacity: .9; transform: translateY(-1px); }
+
+  .map-btn svg { width: 14px; height: 14px; fill: var(--navy); }
+
+
+  #wishes { background: var(--navy-mid); }
+
+  .wish-form {
+    margin-top: 44px;
+    background: rgba(22,35,54,.7);
+    border: 1px solid rgba(201,168,76,.18);
+    border-radius: 16px;
+    padding: 32px;
+    backdrop-filter: blur(8px);
+  }
+
+  .wish-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 560px) { .wish-form-row { grid-template-columns: 1fr; } }
+
+  .wish-input, .wish-textarea {
+    width: 100%;
+    background: rgba(13,27,42,.7);
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: var(--ivory);
+    font-family: 'Lato', sans-serif;
+    font-size: .92rem;
+    outline: none;
+    transition: border-color .25s;
+    resize: none;
+  }
+
+  .wish-input::placeholder, .wish-textarea::placeholder { color: rgba(138,155,176,.5); }
+  .wish-input:focus, .wish-textarea:focus { border-color: var(--gold); }
+  .wish-textarea { height: 100px; }
+
+  .wish-submit {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center; gap: 8px;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+    color: var(--navy);
+    border: none; border-radius: 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity .2s, transform .2s;
+  }
+
+  .wish-submit:hover { opacity: .9; transform: translateY(-1px); }
+  .wish-submit:disabled { opacity: .5; cursor: not-allowed; }
+
+  
+  .wish-feed {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .wish-card {
+    background: rgba(13,27,42,.65);
+    border: 1px solid rgba(201,168,76,.12);
+    border-radius: 14px;
+    padding: 22px 24px;
+    position: relative;
+    animation: fade-up .45s ease;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .wish-quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    line-height: 0;
+    color: var(--gold);
+    opacity: .25;
+    position: absolute;
+    top: 24px; left: 18px;
+  }
+
+  .wish-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.12rem;
+    font-style: italic;
+    color: var(--ivory);
+    padding-left: 28px;
+    line-height: 1.6;
+  }
+
+  .wish-meta {
+    margin-top: 12px;
+    padding-left: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .wish-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--blush));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--navy);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .wish-name { font-size: .82rem; color: var(--gold-lt); font-weight: 400; }
+  .wish-time { font-size: .72rem; color: var(--text-dim); }
+
+  .feed-status {
+    text-align: center;
+    font-size: .8rem;
+    color: var(--text-dim);
+    letter-spacing: .06em;
+    padding: 16px 0;
+  }
+
+  footer {
+    background: #070f1a;
+    text-align: center;
+    padding: 40px 24px;
+  }
+
+  .footer-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .footer-note {
+    font-size: .78rem;
+    color: var(--text-dim);
+    letter-spacing: .06em;
+  }
+
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    opacity: .4;
+    font-size: 1.1rem;
+    letter-spacing: .5em;
+    margin: 12px 0;
+  }
+
+  .footer {
+  color: white;
+  text-align: center;
+   text-shadow: 0 0 10px #fff, 0 0 40px #ff0, 0 0 80px #ff0;
+  padding: 5px;
+}
+</style>
+</head>
+<body>
+
+
+<section id="hero">
+<p class="hero-eyebrow">"Before they say 'I do' Come celebrate the 'Yes!'</p>
+  <p class="hero-eyebrow">Together wiht their families,</p>
+  <h1 class="hero-names">
+    <span>Tiffanny</span>
+    <em class="ampersand">&amp;</em>
+    <span>Ebin</span>
+  </h1>
+  <p class="hero-tagline">invite you to share in the joy of their betrothal. </p>
+  <p class="hero-eyebrow">"We love because he first loved us"</p>
+    <p class="hero-eyebrow">-1 John 4:19</p>
+
+  <div style="margin-top:32px;"><div class="gold-rule wide"></div></div>
+
+  <p style="margin-top:28px; font-size:.8rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold);">
+    Engagement Ceremony
+  </p>
+  <p style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--ivory); margin-top:6px;">
+    Wednesday · 19 August 2026 · 11:00 AM onwards
+  </p>
+
+ 
+  <div id="countdown">
+    <div class="cd-unit"><div class="cd-num" id="cd-days">00</div><div class="cd-label">Days</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-hours">00</div><div class="cd-label">Hours</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-mins">00</div><div class="cd-label">Minutes</div></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-secs">00</div><div class="cd-label">Seconds</div></div>
+  </div>
+</section>
+
+
+<section id="gallery" style="padding:70px 0;">
+  <div class="section-inner" style="padding:0 24px; margin-bottom:36px;">
+    <p class="section-eyebrow">Our Story in Frames</p>
+    <h2 class="section-title">A Glimpse of Us</h2>
+    <div class="gold-rule" style="margin-top:12px;"></div>
+    <p style="text-align:center; margin-top:16px; font-size:.85rem; color:var(--text-dim);">
+      <code style="color:var(--gold); font-size:.8rem;"></code>
+    </p>
+  </div>
+
+  <div class="gallery-track-wrap">
+    <div class="gallery-track" id="gallery-track">
+      <div class="gallery-card"><img src="https://i.ibb.co/wNrQx1rs/38.jpg" alt="38" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/1fNCfxz9/36edt.jpg" alt="36edt" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/6R3nLJ3K/40.jpg" alt="40" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card "><img src="https://i.ibb.co/FbfJshDW/34.jpg" alt="34" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/FkrGLDff/44efut-clean.png" alt="44efut clean" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/rRzksH4p/41.jpg" alt="41" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/4RhZHtpc/50.jpg" alt="50" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/GQ88SwpD/45.jpg" alt="45" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/spT6Y6Hm/49.jpg" alt="49" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <!-- Duplicated for seamless loop -->
+      <div class="gallery-card"><img src="https://i.ibb.co/wNrQx1rs/38.jpg" alt="38" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/1fNCfxz9/36edt.jpg" alt="36edt" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/6R3nLJ3K/40.jpg" alt="40" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/FbfJshDW/34.jpg" alt="34" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/FkrGLDff/44efut-clean.png" alt="44efut clean" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/rRzksH4p/41.jpg" alt="41" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/4RhZHtpc/50.jpg" alt="50" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/GQ88SwpD/45.jpg" alt="45" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+      <div class="gallery-card"><img src="https://i.ibb.co/spT6Y6Hm/49.jpg" alt="49" border="0"><span class="placeholder-icon"></span><div class="couple-label"></div></div>
+    </div>  
+  </div>
+</section>
+
+<section id="details">
+  <div class="section-inner">
+    <p class="section-eyebrow">Event Details</p>
+    <h2 class="section-title">When &amp; Where</h2>
+    <div class="gold-rule wide" style="margin-top:12px;"></div>
+
+    <div class="details-grid">
+
+      <div class="detail-card">
+        <span class="detail-icon">🗓️</span>
+        <p class="detail-label">Date</p>
+        <p class="detail-value">Wednesday<br/>19 August 2026</p>
+        <p class="detail-sub">11:00 AM</p>
+      </div>
+
+      <div class="detail-card">
+        <span class="detail-icon">⏰</span>
+        <p class="detail-label">Time</p>
+        <p class="detail-value">11:30 AM</p>
+        <p class="detail-sub">Ceremony · Lunch · Celebrations</p>
+      </div>
+
+      <div class="detail-card">
+        <span class="detail-icon">📍</span>
+        <p class="detail-label">Venue</p>
+        <p class="detail-value">Holy Family Convention Center<br/></p>
+        <p class="detail-sub">Church rd Perumpilly, Njarackal, Kochi, Kerala 682505</p>
+        <a class="map-btn"
+           href="https://maps.app.goo.gl/SMGfkqCerJ6p4qtd9"
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+          </svg>
+          Get Your Direction
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section id="wishes">
+  <div class="section-inner">
+    <p class="section-eyebrow">Leave a Message</p>
+    <h2 class="section-title">Wishes &amp; Blessings</h2>
+    <div class="gold-rule wide" style="margin-top:12px;"></div>
+    
+    <!-- POST FORM -->
+    <div class="wish-form">
+      <div class="wish-form-row">
+        <input class="wish-input" id="wish-name" type="text" placeholder="Your name" maxlength="50"/>
+      </div>
+      <textarea class="wish-textarea" id="wish-text" placeholder="Write your heartfelt wishes for Tiffanny & Ebin" maxlength="400"></textarea>
+      <br/>
+      <button class="wish-submit" id="wish-btn" onclick="postWish()">
+        <span>✨</span> Send Blessings
+      </button>
+      <div id="wish-error" style="margin-top:10px; font-size:.8rem; color:#f87171; display:none;"></div>
+    </div>
+
+    
+    <div class="wish-feed" id="wish-feed">
+      <div class="feed-status" id="feed-loading">Loading blessings…</div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="ornament">— ✦ —</div>
+  <p class="footer-names"> Tiffanny &amp; Ebin</p>
+  <p class="footer-note">With love &amp; gratitude · 19 August 2026</p>
+  <div style="margin-top:14px;" class="ornament">— ✦ —</div>
+</footer>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp }       from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getFirestore,
+           collection, addDoc,
+           query, orderBy, limit,
+           onSnapshot,
+           serverTimestamp }     from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+  // ── PASTE YOUR FIREBASE CONFIG HERE ──────────────────────────────
+  const firebaseConfig = {
+    apiKey:            "AIzaSyCzgM2DE3EPN7yn7YC35fsqXZfvM4Cdp6c",
+    authDomain:        "tiffanny-and-ebin.firebaseapp.com",
+    projectId:         "tiffanny-and-ebin",
+    storageBucket:     "tiffanny-and-ebin.firebasestorage.app",
+    messagingSenderId: "540343875961",
+    appId:             "1:540343875961:web:14a41adf62edbdf8be57a8",
+  };
+  // ─────────────────────────────────────────────────────────────────
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  /* ── Countdown ── */
+  const EVENT_DATE = new Date('2026-08-19T11:00:00');
+  function updateCountdown() {
+    const diff = EVENT_DATE - new Date();
+    if (diff <= 0) { ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent='00'); return; }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  /* ── Helpers ── */
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function ts2ago(ts) {
+    const diff = Date.now() - ts;
+    if (diff < 60000)    return 'Just now';
+    if (diff < 3600000)  return Math.floor(diff/60000) + 'm ago';
+    if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
+    return Math.floor(diff/86400000) + 'd ago';
+  }
+
+  function renderWish(w) {
+    const initial = (w.name || '?')[0].toUpperCase();
+    const card = document.createElement('div');
+    card.className = 'wish-card';
+    card.id = 'wish-' + w.id;
+    const tsMs = w.ts?.toMillis ? w.ts.toMillis() : (w.ts || Date.now());
+    card.innerHTML = `
+      <span class="wish-quote-mark">"</span>
+      <p class="wish-text">${escHtml(w.text)}</p>
+      <div class="wish-meta">
+        <div class="wish-avatar">${initial}</div>
+        <div>
+          <div class="wish-name">${escHtml(w.name)}</div>
+          <div class="wish-time" data-ts="${tsMs}">${ts2ago(tsMs)}</div>
+        </div>
+      </div>`;
+    return card;
+  }
+
+  /* ── Real-time listener — updates instantly for ALL viewers ── */
+  const wishesCol = collection(db, 'wishes');
+  const q = query(wishesCol, orderBy('ts', 'desc'), limit(200));
+  const feed = document.getElementById('wish-feed');
+  const knownIds = new Set();
+
+  onSnapshot(q, (snapshot) => {
+    document.getElementById('feed-loading').style.display = 'none';
+    const newDocs = snapshot.docs.filter(d => !knownIds.has(d.id));
+    if (newDocs.length === 0 && knownIds.size === 0) {
+      feed.innerHTML = '<div class="feed-status">Be the first to send your blessings! 💛</div>';
+      return;
+    }
+    newDocs.forEach(d => {
+      knownIds.add(d.id);
+      const w = { id: d.id, ...d.data() };
+      if (feed.querySelector('.feed-status')) feed.innerHTML = '';
+      feed.insertBefore(renderWish(w), feed.firstChild);
+    });
+  }, (err) => {
+    console.error(err);
+    document.getElementById('feed-loading').textContent = 'Could not load wishes. Check Firebase setup.';
+  });
+
+  /* ── Post a wish ── */
+  window.postWish = async function() {
+    const nameEl = document.getElementById('wish-name');
+    const textEl = document.getElementById('wish-text');
+    const errEl  = document.getElementById('wish-error');
+    const btn    = document.getElementById('wish-btn');
+
+    errEl.style.display = 'none';
+    const name = nameEl.value.trim();
+    const text = textEl.value.trim();
+
+    if (!name) { errEl.textContent = 'Please enter your name.'; errEl.style.display='block'; return; }
+    if (!text) { errEl.textContent = 'Please write your wish.'; errEl.style.display='block'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      await addDoc(wishesCol, { name, text, ts: serverTimestamp() });
+      nameEl.value = '';
+      textEl.value = '';
+    } catch(e) {
+      errEl.textContent = 'Could not save your wish. Please check Firebase setup.';
+      errEl.style.display = 'block';
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '<span>✨</span> Send Blessings';
+  };
+
+  /* ── Refresh relative timestamps every minute ── */
+  setInterval(() => {
+    document.querySelectorAll('.wish-time[data-ts]').forEach(el => {
+      el.textContent = ts2ago(+el.dataset.ts);
+    });
+  }, 60000);
+</script>
+<style>
+         a {
+            text-decoration: none;
+         }
+        a:hover {
+            text-decoration: none;
+        }
+        </style>
+<div class="footer">
+  <a href="https://youtu.be/Aq5WXmQQooo?si=sGMZWeFYJ1-59Zz_" 
+  style="color:#ffffff30;">-stervineee</a>
+
+</div>
+</body>
+</html>
